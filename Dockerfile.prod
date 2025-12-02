@@ -43,5 +43,6 @@ COPY --chown=node:node .env ./
 COPY --chown=node:node --from=build /workspace/backend/node_modules ./node_modules
 # Copy the built artifact for the specific app
 COPY --chown=node:node --from=build /workspace/backend/dist ./dist
+COPY --chown=node:node scripts ./scripts
 
 CMD [ "node", "dist/apps/${APP_NAME}/main.js" ]

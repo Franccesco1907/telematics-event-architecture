@@ -18,7 +18,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: name,
       autoLoadEntities: true,
       entities: [], // Auto-load will handle this if entities are in the module scope
-      synchronize: this.environmentService.environment !== 'production',
+      synchronize: this.environmentService.environment !== 'production' || process.env.DB_SYNCHRONIZE === 'true',
     };
   }
 }

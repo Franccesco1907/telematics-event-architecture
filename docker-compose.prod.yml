@@ -23,7 +23,7 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    command: ["redis-server", "--appendonly", "yes"]
+    command: [ "redis-server", "--appendonly", "yes" ]
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
@@ -73,6 +73,7 @@ services:
       - "${INGESTOR_PORT:-3000}:3000"
     environment:
       - NODE_ENV=production
+      - DB_SYNCHRONIZE=true
       - KAFKAJS_NO_PARTITIONER_WARNING=1
       - API_PORT=${INGESTOR_PORT:-3000}
       - TIMEOUT=${TIMEOUT}
@@ -116,6 +117,7 @@ services:
       - "${RULES_ENGINE_PORT:-3001}:3001"
     environment:
       - NODE_ENV=production
+      - DB_SYNCHRONIZE=false
       - KAFKAJS_NO_PARTITIONER_WARNING=1
       - API_PORT=${RULES_ENGINE_PORT:-3001}
       - TIMEOUT=${TIMEOUT}
@@ -159,6 +161,7 @@ services:
       - "${NOTIFIER_PORT:-3002}:3002"
     environment:
       - NODE_ENV=production
+      - DB_SYNCHRONIZE=false
       - KAFKAJS_NO_PARTITIONER_WARNING=1
       - API_PORT=${NOTIFIER_PORT:-3002}
       - TIMEOUT=${TIMEOUT}
