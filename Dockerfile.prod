@@ -1,0 +1,47 @@
+FROM node:22-alpine AS development
+
+WORKDIR /workspace/backend
+
+COPY --chown=node:node package*.json ./
+
+RUN npm ci
+
+COPY --chown=node:node .env ./
+COPY --chown=node:node . .
+
+USER node
+
+
+FROM node:22-alpine AS build
+
+WORKDIR /workspace/backend
+
+COPY --chown=node:node package*.json ./
+
+COPY --chown=node:node --from=development /workspace/backend/node_modules ./node_modules
+
+COPY --chown=node:node .env ./
+COPY --chown=node:node . .
+
+# Argument to specify which app to build
+ARG APP_NAME
+RUN if [ -z "$APP_NAME" ]; then echo "APP_NAME argument is required" && exit 1; fi
+
+# Build the specific app
+RUN npm run build ${APP_NAME}
+
+RUN npm ci --only=production && npm cache clean --force
+
+USER node
+
+
+FROM node:22-alpine AS production
+
+WORKDIR /workspace/backend
+
+COPY --chown=node:node .env ./
+COPY --chown=node:node --from=build /workspace/backend/node_modules ./node_modules
+# Copy the built artifact for the specific app
+COPY --chown=node:node --from=build /workspace/backend/dist ./dist
+
+CMD [ "node", "dist/apps/${APP_NAME}/main.js" ]

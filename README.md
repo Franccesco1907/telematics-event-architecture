@@ -80,12 +80,22 @@ El proyecto utiliza **NestJS** con estructura de monorepo:
 *   Docker y Docker Compose instalados.
 *   Node.js (Opcional, para desarrollo local fuera de Docker).
 
-### Ejecución
+### Configuración Inicial
+
+1.  **Configurar variables de entorno:**
+    Renombra el archivo `.env.example` a `.env`:
+    ```bash
+    cp .env.example .env
+    ```
+    *Puedes ajustar las variables según tus necesidades (puertos, credenciales, etc.).*
+
+### Ejecución en Modo Desarrollo (Local)
 
 1.  **Levantar la infraestructura:**
     ```bash
     docker-compose -f docker-compose.local.yml up --build
     ```
+    *Este modo incluye hot-reload para desarrollo activo.*
 
 2.  **Cargar Datos de Prueba (Seeding):**
     El proyecto incluye un endpoint para poblar la base de datos con vehículos y reglas de prueba.
@@ -93,6 +103,14 @@ El proyecto utiliza **NestJS** con estructura de monorepo:
     curl -X POST http://localhost:3000/ingestion/seed
     ```
     *Esto creará 5 vehículos, usuarios y reglas de ejemplo.*
+
+### Ejecución en Modo Producción
+
+1.  **Levantar la infraestructura optimizada:**
+    ```bash
+    docker-compose -f docker-compose.prod.yml up --build
+    ```
+    *Este modo utiliza builds optimizados con multi-stage Dockerfiles, sin dependencias de desarrollo.*
 
 ---
 
