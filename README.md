@@ -12,7 +12,7 @@ El sistema consolida diversas señales (GPS, velocidad, sensores de carga, tempe
 
 ## 1. Arquitectura Propuesta: Event-Driven Architecture (EDA)
 
-![Diagrama ER](image/README/telematics%20-%20ER.png)
+![Diagrama ER](image/README/telematics-er.png)
 
 La solución se basa en un modelo orientado a eventos y microservicios, diseñado para garantizar el desacoplamiento, la escalabilidad horizontal y la tolerancia a fallos.
 
@@ -57,7 +57,7 @@ La solución se basa en un modelo orientado a eventos y microservicios, diseñad
 3.  **Procesamiento:** Los consumidores leen a su propio ritmo.
 4.  **Persistencia:** Se usan inserciones por lotes (Batch Insert) en TimescaleDB.
 
-![Flujo de Telemetría](image/README/telemtry-flow.png)
+![Flujo de Telemetría](image/README/telemetry-flow.png)
 
 ---
 
