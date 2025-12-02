@@ -12,6 +12,8 @@ El sistema consolida diversas señales (GPS, velocidad, sensores de carga, tempe
 
 ## 1. Arquitectura Propuesta: Event-Driven Architecture (EDA)
 
+![Diagrama ER](image/README/telematics%20-%20ER.png)
+
 La solución se basa en un modelo orientado a eventos y microservicios, diseñado para garantizar el desacoplamiento, la escalabilidad horizontal y la tolerancia a fallos.
 
 ### Objetivos Críticos Cumplidos
@@ -44,7 +46,7 @@ La solución se basa en un modelo orientado a eventos y microservicios, diseñad
 2.  El motor de reglas consulta **Redis** (Memoria), evitando la latencia de la base de datos SQL.
 3.  Se dispara la notificación inmediatamente.
 
-![Flujo de Pánico](image/README/1764647034784.png)
+![Flujo de Pánico](image/README/panic-flow.png)
 
 ### B. Flujo de Telemetría Masiva - "Fire and Forget"
 
@@ -55,7 +57,7 @@ La solución se basa en un modelo orientado a eventos y microservicios, diseñad
 3.  **Procesamiento:** Los consumidores leen a su propio ritmo.
 4.  **Persistencia:** Se usan inserciones por lotes (Batch Insert) en TimescaleDB.
 
-![Flujo de Telemetría](image/README/1764647316089.png)
+![Flujo de Telemetría](image/README/telemtry-flow.png)
 
 ---
 
@@ -122,7 +124,10 @@ El proyecto cuenta con una cobertura de pruebas unitarias superior al **50%**, a
 ### API Documentation (Swagger)
 Puedes probar los endpoints del Ingestor directamente desde la interfaz de Swagger:
 
-👉 **URL:** [http://localhost:3000/api](http://localhost:3000/api)
+**URL:** [http://localhost:3000/api](http://localhost:3000/api)
+
+Para exportar la documentación en formato JSON (OpenAPI), accede automáticamente a:
+**JSON:** [http://localhost:3000/api-json](http://localhost:3000/api-json)
 
 ### Prueba Manual de Señal
 Para simular el envío de una señal de GPS:
