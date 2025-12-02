@@ -1,0 +1,10 @@
+{
+	"name": "Backend DevContainer",
+	"dockerComposeFile": "../docker-compose.local.yml",
+	"service": "ingestor",
+	"workspaceFolder": "/workspace/backend",
+	"remoteUser": "root",
+	"mounts": [
+		"source=${localWorkspaceFolder},target=/workspace/backend,type=bind"
+	]
+}
