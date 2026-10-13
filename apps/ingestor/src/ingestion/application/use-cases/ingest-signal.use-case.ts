@@ -107,9 +107,9 @@ export class IngestSignalUseCase {
         ...currentState,
         lastSignalTime: signal.timestamp,
         lastSignalType: signal.signalType,
-        latitude: signal.latitude || currentState?.latitude,
-        longitude: signal.longitude || currentState?.longitude,
-        speed: signal.value?.speed || currentState?.speed,
+        latitude: signal.latitude ?? currentState?.latitude,
+        longitude: signal.longitude ?? currentState?.longitude,
+        speed: signal.value?.speed ?? currentState?.speed,
         lastUpdate: new Date(),
       };
 
