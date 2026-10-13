@@ -90,6 +90,17 @@ describe('EvaluateRuleUseCase', () => {
       expect(result.triggered).toBe(true);
     });
 
+    it('evaluates a zero speed without falling back to a different value', async () => {
+      (cacheService.getRulesByVehicleId as jest.Mock).mockResolvedValue([
+        { ...mockRule, condition: RuleCondition.EQUALS, threshold: 0 },
+      ]);
+
+      const result = await useCase.execute(vehicleId, signalType, { speed: 0, value: 120 });
+
+      expect(result.triggered).toBe(true);
+      expect(kafkaProducer.sendToEventsStream).toHaveBeenCalled();
+    });
+
     it('should handle critical events with priority topic', async () => {
       const criticalRule = { ...mockRule, priority: 10 };
       (cacheService.getRulesByVehicleId as jest.Mock).mockResolvedValue([criticalRule]);

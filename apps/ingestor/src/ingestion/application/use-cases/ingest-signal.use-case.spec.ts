@@ -83,6 +83,22 @@ describe('IngestSignalUseCase', () => {
       );
     });
 
+    it('replaces cached coordinates and speed with zero values', async () => {
+      const signal = { ...signalData, latitude: 0, longitude: 0, value: { speed: 0 } };
+      (telemetryRepository.save as jest.Mock).mockResolvedValue(signal);
+      (cacheService.getVehicleState as jest.Mock).mockResolvedValue({
+        latitude: 10, longitude: 20, speed: 50,
+      });
+
+      await useCase.execute(signal);
+
+      expect(cacheService.setVehicleState).toHaveBeenCalledWith(
+        1,
+        expect.objectContaining({ latitude: 0, longitude: 0, speed: 0 }),
+        3600,
+      );
+    });
+
     it('should throw error if signalType is missing', async () => {
       await expect(useCase.execute({ ...signalData, signalType: undefined })).rejects.toThrow(
         'Signal type is required',

@@ -140,7 +140,7 @@ export class EvaluateRuleUseCase {
     threshold: any,
   ): boolean {
     // Extraer valor numérico si es objeto
-    const numericValue = typeof value === 'object' ? value?.speed || value?.value : value;
+    const numericValue = typeof value === 'object' ? value?.speed ?? value?.value : value;
     const numericThreshold = typeof threshold === 'object' ? threshold?.value : threshold;
 
     switch (condition) {
